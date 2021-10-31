@@ -1,5 +1,5 @@
 
-from typing import List
+from typing import Dict
 from uuid import uuid4
 
 import uvicorn
@@ -9,25 +9,22 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-class CreateCommentRequest(BaseModel):
+class Comment(BaseModel):
     post_id: str
     comment: str
     
 
-class Comment(CreateCommentRequest):
-    id: str
-
-comments: List[Comment] = []
+comments: Dict[str, Comment] = {}
 
 
 @app.post("/comments/create")
-def create_comment(create_comment_request: CreateCommentRequest):
+def create_comment(create_comment_request: Comment):
 
     id: str = uuid4().hex
-    comment = Comment(id=id, post_id=create_comment_request.post_id, comment=create_comment_request.comment)
-    comments.append(comment)
+    comment = Comment(post_id=create_comment_request.post_id, comment=create_comment_request.comment)
+    comments[id] = comment
     logger.debug(f"Comment created with id: {id}")
-    return comment
+    return id
 
 
 if __name__ == "__main__":
