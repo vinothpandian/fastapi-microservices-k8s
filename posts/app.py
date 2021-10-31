@@ -1,4 +1,4 @@
-from typing import List
+from typing import Dict, List
 from uuid import uuid4
 
 import uvicorn
@@ -11,20 +11,16 @@ app = FastAPI()
 class CreatePostRequest(BaseModel):
     title: str
 
-class Post(CreatePostRequest):
-    id: str
-
-posts: List[Post] = []
+posts: Dict[str, str] = {}
 
 
 @app.post("/posts/create")
 def create_post(create_post_request: CreatePostRequest):
 
     id: str = uuid4().hex
-    post = Post(id=id, title=create_post_request.title)
-    posts.append(post)
+    posts[id] = create_post_request.title
     logger.debug(f"Post created with id: {id}")
-    return post
+    return id
 
 
 if __name__ == "__main__":
