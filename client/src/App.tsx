@@ -68,7 +68,13 @@ function PostComponent({ postId, post }: PostComponentProps): ReactElement {
       <Heading>{post.title}</Heading>
       <UnorderedList>
         {post.comments.map((comment) => (
-          <ListItem key={comment.id}>{comment.comment}</ListItem>
+          <ListItem
+            key={comment.id}
+            color={comment.accepted ? "black" : "gray.400"}
+            fontStyle={comment.accepted ? "none" : "italic"}
+          >
+            {comment.comment}
+          </ListItem>
         ))}
       </UnorderedList>
       <form>
@@ -118,7 +124,7 @@ function App(): ReactElement {
   const [title, setTitle] = React.useState<string>("");
 
   const updatePosts = async () => {
-    const response = await axios.get<Posts>("http://localhost:4002/posts");
+    const response = await axios.get<Posts>("http://localhost:4002/posts/");
     if (response.status !== 200) {
       return;
     }

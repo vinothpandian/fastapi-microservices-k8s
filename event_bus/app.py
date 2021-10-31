@@ -1,6 +1,6 @@
-from typing import Any, Dict, List
+from typing import Dict, List
 
-import requests
+import requests_async as requests
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
@@ -25,13 +25,14 @@ events: List[Event] = []
 
 
 @app.post("/events/")
-def create_event(event: Event):
+async def create_event(event: Event):
 
     events.append(event)
 
     logger.debug(f"Received event: {event.type}")
-    requests.post("http://localhost:4000/events/", json=event.dict())
-    requests.post("http://localhost:4001/events/", json=event.dict())
-    requests.post("http://localhost:4002/events/", json=event.dict())
+    await requests.post("http://localhost:4000/events/", json=event.dict())
+    await requests.post("http://localhost:4001/events/", json=event.dict())
+    await requests.post("http://localhost:4002/events/", json=event.dict())
+    await requests.post("http://localhost:4004/events/", json=event.dict())
 
-    logger.debug("Passed events")
+    logger.debug(f"Passed event: {event.type}")

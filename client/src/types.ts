@@ -1,6 +1,7 @@
 export interface Comment {
   id: string;
   comment: string;
+  accepted: boolean;
 }
 
 export interface PostBody {
