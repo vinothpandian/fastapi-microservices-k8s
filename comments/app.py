@@ -47,7 +47,7 @@ async def create_comment(create_comment_request: CreateCommentRequest):
     logger.debug(f"Comment created with id: {id}")
 
     await requests.post(
-        "http://localhost:4003/events/",
+        "http://event-bus-srv:4003/events/",
         json={
             "type": "CommentCreated",
             "payload": {"id": id, "comment": comment.dict()},
@@ -67,7 +67,7 @@ async def event_handler(event: Event):
         comment.accepted = True
 
         await requests.post(
-            "http://localhost:4003/events/",
+            "http://event-bus-srv:4003/events/",
             json={
                 "type": "CommentUpdated",
                 "payload": {
@@ -87,7 +87,7 @@ async def event_handler(event: Event):
         comment = comments[id]
 
         await requests.post(
-            "http://localhost:4003/events/",
+            "http://event-bus-srv:4003/events/",
             json={
                 "type": "CommentDeleted",
                 "payload": {"post_id": comment.post_id, "comment_id": id},

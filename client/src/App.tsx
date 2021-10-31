@@ -44,7 +44,7 @@ function HeaderComponent({
           type="submit"
           colorScheme="green"
           onClick={() => {
-            axios.post("http://localhost:4000/posts/create/", {
+            axios.post("http://posts.com/posts/create/", {
               title,
             });
           }}
@@ -89,7 +89,7 @@ function PostComponent({ postId, post }: PostComponentProps): ReactElement {
         <Button
           type="submit"
           onClick={() => {
-            axios.post("http://localhost:4001/comments/create/", {
+            axios.post("http://posts.com/comments/create/", {
               post_id: postId,
               comment: commentText,
             });
@@ -124,7 +124,7 @@ function App(): ReactElement {
   const [title, setTitle] = React.useState<string>("");
 
   const updatePosts = async () => {
-    const response = await axios.get<Posts>("http://localhost:4002/posts/");
+    const response = await axios.get<Posts>("http://posts.com/posts/");
     if (response.status !== 200) {
       return;
     }

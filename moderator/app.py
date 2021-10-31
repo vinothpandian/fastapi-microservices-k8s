@@ -41,7 +41,7 @@ async def event_handler(event: Event):
 
         logger.debug(f"Rejected comment: {comment_id}")
         await requests.post(
-            "http://localhost:4003/events/",
+            "http://event-bus-srv:4003/events/",
             json={
                 "type": "CommentRejected",
                 "payload": {"id": comment_id},
@@ -53,7 +53,7 @@ async def event_handler(event: Event):
     logger.debug(f"Accepted comment: {comment_id}")
 
     await requests.post(
-        "http://localhost:4003/events/",
+        "http://event-bus-srv:4003/events/",
         json={
             "type": "CommentAccepted",
             "payload": {"id": comment_id},

@@ -37,7 +37,7 @@ async def create_post(create_post_request: CreatePostRequest):
     logger.debug(f"Post created with id: {id}")
 
     await requests.post(
-        "http://localhost:4003/events/",
+        "http://event-bus-srv:4003/events/",
         json={
             "type": "PostCreated",
             "payload": {"id": id, "title": create_post_request.title},

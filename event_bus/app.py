@@ -30,9 +30,9 @@ async def create_event(event: Event):
     events.append(event)
 
     logger.debug(f"Received event: {event.type}")
-    await requests.post("http://localhost:4000/events/", json=event.dict())
-    await requests.post("http://localhost:4001/events/", json=event.dict())
-    await requests.post("http://localhost:4002/events/", json=event.dict())
-    await requests.post("http://localhost:4004/events/", json=event.dict())
+    await requests.post("http://posts-srv:4000/events/", json=event.dict())
+    await requests.post("http://comments-srv:4001/events/", json=event.dict())
+    await requests.post("http://query-srv:4002/events/", json=event.dict())
+    await requests.post("http://moderator-srv:4004/events/", json=event.dict())
 
     logger.debug(f"Passed event: {event.type}")
