@@ -17,7 +17,7 @@ class Comment(BaseModel):
 comments: Dict[str, Comment] = {}
 
 
-@app.post("/comments/create")
+@app.post("/comments/create/")
 def create_comment(create_comment_request: Comment):
 
     id: str = uuid4().hex

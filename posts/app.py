@@ -14,7 +14,7 @@ class CreatePostRequest(BaseModel):
 posts: Dict[str, str] = {}
 
 
-@app.post("/posts/create")
+@app.post("/posts/create/")
 def create_post(create_post_request: CreatePostRequest):
 
     id: str = uuid4().hex
